@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import school.raikes.Q.model.Role;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -18,8 +19,8 @@ public class RoleDaoImpl implements RoleDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public RoleDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public RoleDaoImpl(EntityManagerFactory emf) {
+        this.sessionFactory = emf.unwrap(SessionFactory.class);
     }
 
     @Override

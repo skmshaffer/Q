@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import school.raikes.Q.model.Role;
 import school.raikes.Q.model.User;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -19,8 +20,8 @@ public class UserDaoImpl implements UserDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserDaoImpl(EntityManagerFactory emf) {
+        this.sessionFactory = emf.unwrap(SessionFactory.class);
     }
 
     @Override

@@ -2,12 +2,14 @@ package school.raikes.Q.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.hql.internal.ast.tree.SessionFactoryAwareNode;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import school.raikes.Q.model.Queue;
 import school.raikes.Q.model.QueueItem;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -19,8 +21,8 @@ public class QueueItemDaoImpl implements QueueItemDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public QueueItemDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public QueueItemDaoImpl(EntityManagerFactory emf) {
+        this.sessionFactory = emf.unwrap(SessionFactory.class);
     }
 
     @Override
