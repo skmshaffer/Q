@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: htmlhead('Home')">
+</head>
+<body>
+    <nav th:replace="layout :: navbar('q')"></nav>
+    <div th:replace="layout :: flashMessage(${flash})"></div>
+</body>

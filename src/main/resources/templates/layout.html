@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="htmlhead(title)">
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon.png}"></link>
+
+    <title th:text="'Q | ' + ${title}">(title)</title>
+
+    <link rel="stylesheet" th:href="@{assets/css/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap-table.min.css}"/>
+    <link rel="stylesheet" th:href="@{assets/css/style.css}"/>
+
+    <script th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{assets/js/popper.js}"></script>
+    <script th:src="@{assets/js/bootstrap.min.js}"></script>
+    <script th:src="@{assets/js/bootstrap-table.min.js}"></script>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar(selected)">
+    <a class="navbar-brand" th:href="@{/}">Q!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <th:block th:if="${selected != 'login'}">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <th:block th:if="${user != null}">
+                <ul class="navbar-nav ml-auto">
+                    <!-- User Details go here. -->
+                    <li>
+                        <a class="nav-link user-details" th:href="@{/logout}">
+                            <span th:text="${user.username}"></span>
+                            <img th:src="${(user.image != null) ? '' : '/assets/images/default-user.png'}" class="user-img" alt="User Profile Image"/>
+                        </a>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+    </th:block>
+</nav>
+
+<div th:fragment="flashMessage(message)">
+    <th:block th:if="${message != null}">
+        <div th:class="'m-3 alert ' + ${(message.type == T(school.raikes.Q.web.FlashMessage.MessageType).SUCCESS) ? 'alert-primary' : 'alert-danger'}" th:text="${message.content}"></div>
+    </th:block>
+</div>
+
+</html>

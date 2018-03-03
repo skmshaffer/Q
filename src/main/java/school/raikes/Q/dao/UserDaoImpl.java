@@ -66,8 +66,9 @@ public class UserDaoImpl implements UserDao {
             cq.select(r).where(cb.equal(r.get("username"), username));
 
             Query<User> q = s.createQuery(cq);
-
             user = q.getSingleResult();
+        } catch (Exception ex) {
+            user = null;
         }
 
         return user;
