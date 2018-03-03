@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import school.raikes.Q.model.User;
+import school.raikes.Q.model.dto.RegistrationInfo;
 import school.raikes.Q.service.UserService;
 import school.raikes.Q.web.FlashMessage;
 
@@ -33,7 +34,7 @@ public class LoginController {
         try {
             FlashMessage flash = (FlashMessage) request.getSession().getAttribute("flash");
             model.addAttribute("flash", flash);
-            request.getSession().getAttribute("flash");
+            request.getSession().removeAttribute("flash");
         } catch (Exception e) {
             // Flash is non-existent. Continue as normal.
         }
@@ -55,12 +56,4 @@ public class LoginController {
     public String accessDenied() {
         return "access_denied";
     }
-
-    @RequestMapping("/register")
-    public String register() {
-        return null;
-    }
-
-
-
 }

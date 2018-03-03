@@ -3,6 +3,8 @@ package school.raikes.Q.service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import school.raikes.Q.model.Role;
 import school.raikes.Q.model.User;
+import school.raikes.Q.model.dto.RegistrationInfo;
+import school.raikes.Q.service.exceptions.UserRegistrationException;
 
 import java.util.List;
 

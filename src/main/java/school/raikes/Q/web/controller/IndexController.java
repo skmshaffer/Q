@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import school.raikes.Q.model.User;
 import school.raikes.Q.service.UserService;
+import school.raikes.Q.web.FlashMessage;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
@@ -20,7 +22,15 @@ public class IndexController {
     }
 
     @RequestMapping("/")
-    public String home(Model model, Principal principal) {
+    public String home(Model model, Principal principal, HttpServletRequest request) {
+
+        try {
+            FlashMessage flash = (FlashMessage) request.getSession().getAttribute("flash");
+            model.addAttribute("flash", flash);
+            request.getSession().removeAttribute("flash");
+        } catch (Exception e) {
+            // Flash is non-existent. Continue as normal.
+        }
 
         if (principal != null) {
             User user = userService.findByUsername(principal.getName());

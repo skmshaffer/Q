@@ -3,10 +3,13 @@ package school.raikes.Q.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.raikes.Q.dao.UserDao;
 import school.raikes.Q.model.Role;
 import school.raikes.Q.model.User;
+import school.raikes.Q.model.dto.RegistrationInfo;
+import school.raikes.Q.service.exceptions.UserRegistrationException;
 
 import java.util.List;
 

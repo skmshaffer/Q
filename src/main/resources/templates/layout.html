@@ -57,7 +57,7 @@
 
 <div th:fragment="flashMessage(message)">
     <th:block th:if="${message != null}">
-        <div th:class="'m-3 alert ' + ${(message.type == T(school.raikes.Q.web.FlashMessage.MessageType).SUCCESS) ? 'alert-primary' : 'alert-danger'}" th:text="${message.content}"></div>
+        <div th:class="'my-3 alert ' + ${(message.type == T(school.raikes.Q.web.FlashMessage.MessageType).SUCCESS) ? 'alert-primary' : 'alert-danger'}" th:text="${message.content}"></div>
     </th:block>
 </div>
 
