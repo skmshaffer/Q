@@ -1,0 +1,65 @@
+
+/* LOGIN PAGE */
+
+#login-pane {
+    position: absolute;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 400px;
+    background-color: #c6c8ca;
+    border-radius: 3px;
+    padding: 30px;
+    box-shadow: 0 0 5px #1d2124;
+}
+
+.login-header {
+    flex: 1;
+    width: 300px;
+}
+
+.login-header-text {
+    color: #555;
+    text-align: center;
+}
+
+.login-form {
+    width: 240px;
+    flex: 0;
+}
+
+.login-button {
+    margin-top: 20px;
+    height: 50px;
+    width: 100%;
+}
+
+.navbar {
+    min-height: 60px;
+}
+
+.user-img {
+    width: 25px;
+    height: 25px;
+    display: inline;
+    float: left;
+    margin-right: 15px;
+    margin-left: auto;
+}
+
+.user-details {
+    margin: 0;
+    width: 250px;
+}
+
+.user-name {
+    display: inline-block;
+}
+/* REGISTRATION PAGE */

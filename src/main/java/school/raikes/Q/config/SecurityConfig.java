@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import school.raikes.Q.service.UserService;
+import school.raikes.Q.web.FlashMessage;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +44,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll();
+        http
+                .authorizeRequests()
+                    .anyRequest()
+                    .permitAll()
+                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .successHandler(loginSuccessHandler())
+                    .failureHandler(loginFailureHandler())
+                    .and()
+                .csrf();
     }
 
     public AuthenticationSuccessHandler loginSuccessHandler() {
@@ -52,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public AuthenticationFailureHandler loginFailureHandler() {
         return (req, res, auth) -> {
+            req.getSession().setAttribute("flash", new FlashMessage("Incorrect username and/or password. Please try again.", FlashMessage.MessageType.FAILURE));
+            res.sendRedirect("/login");
         };
     }
 }

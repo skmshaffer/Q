@@ -5,4 +5,19 @@
 <body>
     <nav th:replace="layout :: navbar('q')"></nav>
     <div th:replace="layout :: flashMessage(${flash})"></div>
+    <div class="jumbotron">
+        <h1 class="display-1">Welcome to Q.</h1>
+        <p>
+            Q! is a basic queue system designed for, well anything where a basic queue system is needed.
+            Primarily, it is for the use of Teaching Assistants who need a way to keep track of their
+            queues at their office hours.
+        </p>
+        <hr class="my-4"/>
+        <form class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" id ="roomCode" placeholder="Enter room code.">
+                <button type="submit" class="ml-2 btn btn-primary">Go</button>
+            </div>
+        </form>
+    </div>
 </body>
