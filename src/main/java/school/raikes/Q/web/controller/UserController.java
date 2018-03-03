@@ -1,6 +1,5 @@
 package school.raikes.Q.web.controller;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import school.raikes.Q.model.User;
 import school.raikes.Q.service.SecurityService;
 import school.raikes.Q.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
