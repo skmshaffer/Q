@@ -32,10 +32,13 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- User Details go here. -->
                     <li>
-                        <a class="nav-link user-details" th:href="@{/logout}">
+                        <a class="nav-link user-details" th:href="@{/account}">
                             <span th:text="${user.username}"></span>
-                            <img th:src="${(user.image != null) ? '' : '/assets/images/default-user.png'}" class="user-img" alt="User Profile Image"/>
+                            <img th:src="${(user.image != null) ? '/account/profile-picture' : '/assets/images/default-user.png'}" class="user-img" alt="User Profile Image"/>
                         </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/logout}" class="nav-link">Logout</a>
                     </li>
                 </ul>
             </th:block>

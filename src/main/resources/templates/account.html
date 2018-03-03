@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: htmlhead('Account')">
+</head>
+<body>
+<nav th:replace="layout :: navbar('account')"></nav>
+<div th:replace="layout :: flashMessage(${flash})"></div>
+
+<div class="container">
+    <div class="col-sm mt-3">
+        <h1 class="mb-4">My Account</h1>
+        <div class="container">
+            <h6>Profile Picture</h6>
+            <div class="row">
+                <form class="form-inline" th:action="@{account/profile-picture}" enctype="multipart/form-data" method="post">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <span class="btn btn-secondary btn-file">
+                            Browse
+                            <input th:type="file" class="form-control-file" name="file" id="profile-image-upload-field" accept="image/*" required>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Upload Photo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

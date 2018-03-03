@@ -21,6 +21,10 @@ public class QueueItem {
 
     private boolean complete;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User servicer;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +63,13 @@ public class QueueItem {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
+    }
+
+    public User getServicer() {
+        return servicer;
+    }
+
+    public void setServicer(User servicer) {
+        this.servicer = servicer;
     }
 }

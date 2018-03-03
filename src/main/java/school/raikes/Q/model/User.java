@@ -32,8 +32,15 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Lob
+    @Basic
     private byte[] image;
+
+    @Column
+    private String imageType;
+
+    @Column
+    @OneToMany(mappedBy = "servicer")
+    private List<QueueItem> servicedItems;
 
     public Long getId() {
         return id;
@@ -69,6 +76,22 @@ public class User implements UserDetails {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
+
+    public List<QueueItem> getServicedItems() {
+        return servicedItems;
+    }
+
+    public void setServicedItems(List<QueueItem> servicedItems) {
+        this.servicedItems = servicedItems;
     }
 
     @Override
