@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: htmlhead(${user.getUsername()} + '\'s Queues')">
+</head>
+<body>
+<nav th:replace="layout :: navbar('q')"></nav>
+<div th:replace="layout :: flashMessage(${flash})"></div>
+<div class="container">
+    <p class="display-4" th:text="${user.getUsername()} + '\'s Queues'"></p>
+    <div class="mt-5 col-lg table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Queue</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${queues}">
+                <td th:text="${queues.indexOf(item) + 1}"></td>
+                <td th:text="${item.getQueueCode()}"></td>
+                <td th:text="${dateFormat.format(item.getCreationDate())}"></td>
+                <td>
+                    <!-- Buttons for controlling queue items. -->
+                    <a class="btn btn-success" th:href="@{ ${'/queue/' + item.getQueueCode()} }">Open</a>
+                    <button class="btn btn-danger" th:onclick="|deleteQueueItem('${item.getQueueCode()}')|">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import school.raikes.Q.model.Queue;
 import school.raikes.Q.model.User;
+import school.raikes.Q.service.QueueService;
 import school.raikes.Q.service.SecurityService;
 import school.raikes.Q.service.UserService;
 import school.raikes.Q.utility.ImageUtility;
@@ -21,17 +22,21 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
     private final SecurityService securityService;
+    private final QueueService queueService;
 
     @Autowired
-    public UserController(UserService userService, SecurityService securityService) {
+    public UserController(UserService userService, SecurityService securityService, QueueService queueService) {
         this.userService = userService;
         this.securityService = securityService;
+        this.queueService = queueService;
     }
 
     @RequestMapping("/account")
@@ -98,5 +103,20 @@ public class UserController {
         } catch (IOException ioe) {
             //TODO: Handle this somehow.
         }
+    }
+
+    @RequestMapping(value = "/account/queues", method = RequestMethod.GET)
+    public String getAllUserQueues(Model model, Principal principal) {
+
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+
+        List<Queue> queues = queueService.findByOwner(user);
+        model.addAttribute("queues", queues);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        model.addAttribute("dateFormat", dateFormat);
+
+        return "my_queues";
     }
 }

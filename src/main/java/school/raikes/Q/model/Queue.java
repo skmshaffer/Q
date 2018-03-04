@@ -2,6 +2,7 @@ package school.raikes.Q.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,12 @@ public class Queue {
     @NotNull
     private User owner;
 
-    @OneToMany(mappedBy = "queue", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "queue", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<QueueItem> queueItems;
+
+    @Column
+    @NotNull
+    private Date creationDate;
 
     public Long getId() {
         return id;
@@ -52,5 +57,13 @@ public class Queue {
 
     public void setQueueItems(List<QueueItem> queueItems) {
         this.queueItems = queueItems;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

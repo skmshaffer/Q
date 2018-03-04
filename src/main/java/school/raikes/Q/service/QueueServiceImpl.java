@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import school.raikes.Q.dao.QueueDao;
 import school.raikes.Q.model.Queue;
 import school.raikes.Q.model.QueueItem;
+import school.raikes.Q.model.User;
 
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class QueueServiceImpl implements QueueService {
     @Override
     public List<Queue> findAll() {
         return queueDao.findAll();
+    }
+
+    @Override
+    public List<Queue> findByOwner(User owner) {
+        return queueDao.findByOwner(owner);
     }
 
     @Override

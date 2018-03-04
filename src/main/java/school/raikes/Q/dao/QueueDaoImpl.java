@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import school.raikes.Q.model.Queue;
 import school.raikes.Q.model.QueueItem;
+import school.raikes.Q.model.User;
 
 @Repository
 public class QueueDaoImpl implements QueueDao {
@@ -38,6 +40,28 @@ public class QueueDaoImpl implements QueueDao {
             Query<Queue> q = s.createQuery(cq);
 
             queues = q.getResultList();
+        }
+
+        return queues;
+    }
+
+    @Override
+    public List<Queue> findByOwner(User owner) {
+        List<Queue> queues;
+
+        try (Session s = sessionFactory.openSession()) {
+            CriteriaBuilder cb = s.getCriteriaBuilder();
+
+            CriteriaQuery<Queue> cq = cb.createQuery(Queue.class);
+            Root<Queue> r = cq.from(Queue.class);
+            cq.select(r).where(cb.equal(r.get("owner"), owner));
+
+            Query<Queue> q = s.createQuery(cq);
+
+            queues = q.getResultList();
+        } catch (Exception ex) {
+            queues = null;
+            //TODO: Handle this somehow.
         }
 
         return queues;
@@ -102,7 +126,8 @@ public class QueueDaoImpl implements QueueDao {
         try (Session s = sessionFactory.openSession()) {
             s.beginTransaction();
 
-            s.delete(queue);
+            Queue toDelete = s.load(Queue.class, queue.getId());
+            s.delete(toDelete);
 
             s.getTransaction().commit();
         }

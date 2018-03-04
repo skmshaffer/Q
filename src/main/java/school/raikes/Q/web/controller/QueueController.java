@@ -1,6 +1,8 @@
 package school.raikes.Q.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import school.raikes.Q.model.User;
 import school.raikes.Q.service.QueueItemService;
 import school.raikes.Q.service.QueueService;
 import school.raikes.Q.service.UserService;
+import school.raikes.Q.utility.RandomUtility;
 import school.raikes.Q.web.FlashMessage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +65,30 @@ public class QueueController {
         return "queue";
     }
 
+    @RequestMapping(value = "/queue/{queueCode}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteQueue(@PathVariable("queueCode") String queueCode, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        System.out.println("HERE");
+
+        User u = userService.findByUsername(principal.getName());
+        Queue q = queueService.findByQueueCode(queueCode);
+
+        if (q == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        if (!q.getOwner().getId().equals(u.getId())) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        queueService.delete(q);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/queue/{queueCode}/add")
     public String newQueueItemForm(Model model, Principal principal, @PathVariable("queueCode") String queueCode) {
         Queue queue = queueService.findByQueueCode(queueCode);
@@ -82,7 +109,7 @@ public class QueueController {
     }
 
     @RequestMapping(value = "/queue/{queueCode}/add", method = RequestMethod.POST)
-public String newQueueItem(@PathVariable("queueCode") String queueCode, @ModelAttribute("queueItem") QueueItem queueItem) {
+    public String newQueueItem(@PathVariable("queueCode") String queueCode, @ModelAttribute("queueItem") QueueItem queueItem) {
 
         queueItem.setQueue(queueService.findByQueueCode(queueCode));
         queueItem.setComplete(false);
@@ -91,6 +118,26 @@ public String newQueueItem(@PathVariable("queueCode") String queueCode, @ModelAt
         queueItemService.save(queueItem);
 
         return "redirect:/queue/" + queueCode;
+    }
+
+    @RequestMapping(value = "/queue/create", method = RequestMethod.GET)
+    public String newQueue(Principal principal) {
+
+        if (principal != null) {
+            User currentUser = userService.findByUsername(principal.getName());
+
+            Queue newQueue = new Queue();
+
+            newQueue.setQueueCode(RandomUtility.generateRandomAlphabeticString(5));
+            newQueue.setOwner(currentUser);
+            newQueue.setCreationDate(Calendar.getInstance().getTime());
+
+            queueService.save(newQueue);
+
+            return "redirect:/queue/" + newQueue.getQueueCode();
+        }
+
+        return "redirect:/";
     }
 
 

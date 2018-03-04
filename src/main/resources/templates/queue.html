@@ -36,6 +36,9 @@
                     <td>
                         <p th:if="${item.getServicer() != null}" class="lead" th:text="${item.getServicer().getUsername()}"></p>
                     </td>
+                    <td th:if="${user != null}">
+                        <button class="btn btn-primary" th:onclick="|claimQueueItem('${user.username}', '${item.id}');|">Claim</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

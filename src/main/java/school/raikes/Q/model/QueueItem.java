@@ -1,5 +1,9 @@
 package school.raikes.Q.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import school.raikes.Q.serialization.UserSerializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -18,6 +22,7 @@ public class QueueItem {
     @ManyToOne
     @JoinColumn(name = "queue_id")
     @NotNull
+    @JsonIgnore
     private Queue queue;
 
     private boolean complete;

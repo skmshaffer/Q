@@ -1,8 +1,10 @@
 package school.raikes.Q.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import school.raikes.Q.serialization.UserSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -37,10 +39,6 @@ public class User implements UserDetails {
 
     @Column
     private String imageType;
-
-    @Column
-    @OneToMany(mappedBy = "servicer")
-    private List<QueueItem> servicedItems;
 
     public Long getId() {
         return id;
@@ -84,14 +82,6 @@ public class User implements UserDetails {
 
     public void setImageType(String imageType) {
         this.imageType = imageType;
-    }
-
-    public List<QueueItem> getServicedItems() {
-        return servicedItems;
-    }
-
-    public void setServicedItems(List<QueueItem> servicedItems) {
-        this.servicedItems = servicedItems;
     }
 
     @Override
