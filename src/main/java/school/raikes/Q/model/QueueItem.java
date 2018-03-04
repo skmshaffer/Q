@@ -2,6 +2,7 @@ package school.raikes.Q.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class QueueItem {
@@ -24,6 +25,10 @@ public class QueueItem {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User servicer;
+
+    private Date creationDate;
+
+    private Date completionDate;
 
     public Long getId() {
         return id;
@@ -71,5 +76,21 @@ public class QueueItem {
 
     public void setServicer(User servicer) {
         this.servicer = servicer;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(Date completionDate) {
+        this.completionDate = completionDate;
     }
 }

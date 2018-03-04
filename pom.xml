@@ -5,7 +5,7 @@
 
 	<groupId>school.raikes</groupId>
 	<artifactId>Q</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Q</name>
@@ -59,6 +59,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
 		</dependency>
 
 

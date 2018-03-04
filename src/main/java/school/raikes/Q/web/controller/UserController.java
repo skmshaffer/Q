@@ -13,8 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import school.raikes.Q.model.User;
 import school.raikes.Q.service.SecurityService;
 import school.raikes.Q.service.UserService;
+import school.raikes.Q.utility.ImageUtility;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -42,13 +46,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/account/profile-picture", method = RequestMethod.POST)
-    public String uploadProfilePicture(@RequestParam("file") MultipartFile file, Principal principal, RedirectAttributes redirectAttributes) {
+    public String uploadProfilePicture(@RequestParam("file") MultipartFile file, Principal principal) {
 
         User user = userService.findByUsername(principal.getName());
 
         try {
-            user.setImageType(file.getContentType());
-            user.setImage(file.getBytes());
+            user.setImageType("image/jpeg");
+
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+            byte[] userImage = ImageUtility.prepareProfileImageForStorage(image);
+
+            user.setImage(userImage);
 
             userService.save(user);
         } catch (IOException ioe) {

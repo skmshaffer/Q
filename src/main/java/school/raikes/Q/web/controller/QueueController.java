@@ -14,6 +14,7 @@ import school.raikes.Q.web.FlashMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Calendar;
 
 @Controller
 public class QueueController {
@@ -85,6 +86,7 @@ public String newQueueItem(@PathVariable("queueCode") String queueCode, @ModelAt
 
         queueItem.setQueue(queueService.findByQueueCode(queueCode));
         queueItem.setComplete(false);
+        queueItem.setCreationDate(Calendar.getInstance().getTime());
 
         queueItemService.save(queueItem);
 
