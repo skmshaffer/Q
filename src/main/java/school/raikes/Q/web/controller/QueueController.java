@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import school.raikes.Q.model.Queue;
+import school.raikes.Q.model.QueueItem;
 import school.raikes.Q.model.User;
+import school.raikes.Q.service.QueueItemService;
 import school.raikes.Q.service.QueueService;
 import school.raikes.Q.service.UserService;
 import school.raikes.Q.web.FlashMessage;
@@ -23,11 +22,13 @@ import java.security.Principal;
 public class QueueController {
 
     private QueueService queueService;
+    private QueueItemService queueItemService;
     private UserService userService;
 
     @Autowired
-    public QueueController(QueueService queueService, UserService userService) {
+    public QueueController(QueueService queueService, QueueItemService queueItemService, UserService userService) {
         this.queueService = queueService;
+        this.queueItemService = queueItemService;
         this.userService = userService;
     }
 
@@ -61,6 +62,36 @@ public class QueueController {
         model.addAttribute("queue", queue);
 
         return "queue";
+    }
+
+    @RequestMapping(value = "/queue/{queueCode}/add")
+    public String newQueueItemForm(Model model, Principal principal, @PathVariable("queueCode") String queueCode) {
+        Queue queue = queueService.findByQueueCode(queueCode);
+
+        if (queue == null) {
+            //TODO: Handle this somehow.
+        }
+
+        if (principal != null) {
+            User currentUser = userService.findByUsername(principal.getName());
+            model.addAttribute("user", currentUser);
+        }
+
+        model.addAttribute("queueItem", new QueueItem());
+        model.addAttribute("queueCode", queueCode);
+
+        return "create_queue_item";
+    }
+
+    @RequestMapping(value = "/queue/{queueCode}/add", method = RequestMethod.POST)
+public String newQueueItem(@PathVariable("queueCode") String queueCode, @ModelAttribute("queueItem") QueueItem queueItem) {
+
+        queueItem.setQueue(queueService.findByQueueCode(queueCode));
+        queueItem.setComplete(false);
+
+        queueItemService.save(queueItem);
+
+        return "redirect:/queue/" + queueCode;
     }
 
 

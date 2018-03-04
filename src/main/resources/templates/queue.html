@@ -6,9 +6,39 @@
 <nav th:replace="layout :: navbar('q')"></nav>
 <div th:replace="layout :: flashMessage(${flash})"></div>
 <div class="container">
-    <p class="display-4"></p>
-    <div class="col-lg">
-
+    <p class="display-4" th:text="${queue.getQueueCode()}"></p>
+    <div>
+        <a th:href="@{ ${queue.getQueueCode()} + '/add' }" class="btn btn-primary btn-block">Add to Queue</a>
+    </div>
+    <div class="mt-5 col-lg table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col" align="right">Description</th>
+                <th scope="col" style="text-align: center;">Completed?</th>
+                <th scope="col">TA</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody th:each="item : ${queue.getQueueItems()}">
+                <tr>
+                    <td th:text="${queue.getQueueItems().indexOf(item) + 1}"></td>
+                    <td th:text="${item.getName()}"></td>
+                    <td th:text="${item.getDescription()}"></td>
+                    <td align="center">
+                        <i th:if="${item.isComplete()}" class="fas fa-check-circle fa-2x"></i>
+                    </td>
+                    <td>
+                        <img class="queue-img" th:if="${item.getServicer() != null}" th:with="imageUrl = '/account/profile-picture/' + ${item.getServicer().getUsername()}" th:src="@{ ${imageUrl} }">
+                    </td>
+                    <td>
+                        <p th:if="${item.getServicer() != null}" class="lead" th:text="${item.getServicer().getUsername()}"></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: htmlhead('New Queue Item')"></head>
+<body>
+<nav th:replace="layout :: navbar('new-item')"></nav>
+
+<div class="container mw-25">
+    <div class="col-sm mx-auto">
+        <div th:replace="layout :: flashMessage(${flash})"></div>
+        <div class="form-header">
+            <h1 class="display-4 login-header-text my-3">New Queue Item</h1>
+            <p class="lead" th:text="'Adding to Queue: ' + ${queueCode}"></p>
+        </div>
+        <form th:object="${queueItem}" method="post">
+            <div class="form-group login-item">
+                <input type="text" class="form-control" th:field="*{name}" id="new-item-name" placeholder="Name" required/>
+            </div>
+            <div class="form-group login-item">
+                <input type="text" class="form-control" th:field="*{description}" id="new-item-description" placeholder="Description"/>
+            </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-primary login-button">Create Item</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

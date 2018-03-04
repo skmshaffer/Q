@@ -19,7 +19,7 @@ public class Queue {
     @NotNull
     private User owner;
 
-    @OneToMany(mappedBy = "queue")
+    @OneToMany(mappedBy = "queue", fetch = FetchType.EAGER)
     private List<QueueItem> queueItems;
 
     public Long getId() {
