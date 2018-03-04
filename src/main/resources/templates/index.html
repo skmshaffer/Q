@@ -3,21 +3,21 @@
 <head th:replace="layout :: htmlhead('Home')">
 </head>
 <body>
-    <nav th:replace="layout :: navbar('q')"></nav>
-    <div th:replace="layout :: flashMessage(${flash})"></div>
-    <div class="jumbotron">
-        <h1 class="display-3">Welcome to Q.</h1>
-        <p>
-            Q! is a basic queue system designed for, well anything where a basic queue system is needed.
-            Primarily, it is for the use of Teaching Assistants who need a way to keep track of their
-            queues at their office hours.
-        </p>
-        <hr class="my-4"/>
-        <form class="form-inline">
-            <div class="form-group mx-sm-3 mb-2">
-                <input type="text" class="form-control" id ="roomCode" placeholder="Enter room code.">
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Go</button>
-        </form>
-    </div>
+<nav th:replace="layout :: navbar('q')"></nav>
+<div th:replace="layout :: flashMessage(${flash})"></div>
+<div class="jumbotron">
+    <h1 class="display-3">Welcome to Q.</h1>
+    <p>
+        Q! is a basic queue system designed for, well anything where a basic queue system is needed.
+        Primarily, it is for the use of Teaching Assistants who need a way to keep track of their
+        queues at their office hours.
+    </p>
+    <hr class="my-4"/>
+    <form class="form-inline" th:action="@{/queue/}" method="post">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id ="roomCode" name="queue-code" placeholder="Enter Queue Code" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Go</button>
+    </form>
+</div>
 </body>

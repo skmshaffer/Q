@@ -12,6 +12,8 @@ public interface QueueService {
 
     Queue findByQueueItem(QueueItem queueItem);
 
+    Queue findByQueueCode(String queueCode);
+
     void save(Queue queue);
 
     void delete(Queue queue);

@@ -66,6 +66,27 @@ public class QueueDaoImpl implements QueueDao {
     }
 
     @Override
+    public Queue findByQueueCode(String queueCode) {
+        Queue queue;
+
+        try (Session s = sessionFactory.openSession()) {
+            CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+
+            CriteriaQuery<Queue> cq = cb.createQuery(Queue.class);
+            Root<Queue> r = cq.from(Queue.class);
+            cq.select(r).where(cb.equal(r.get("queueCode"), queueCode));
+
+            Query<Queue> q = s.createQuery(cq);
+
+            queue = q.getSingleResult();
+        } catch (Exception ex) {
+            queue = null;
+        }
+
+        return queue;
+    }
+
+    @Override
     public void save(Queue queue) {
         try (Session s = sessionFactory.openSession()) {
             s.beginTransaction();

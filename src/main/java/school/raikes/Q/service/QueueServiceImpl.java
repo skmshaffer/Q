@@ -33,8 +33,14 @@ public class QueueServiceImpl implements QueueService {
         return queueDao.findByQueueItem(queueItem);
     }
 
+    public Queue findByQueueCode(String queueCode) {
+        queueCode = queueCode.toUpperCase();
+        return queueDao.findByQueueCode(queueCode);
+    }
+
     @Override
     public void save(Queue queue) {
+        queue.setQueueCode(queue.getQueueCode().toUpperCase());
         queueDao.save(queue);
     }
 

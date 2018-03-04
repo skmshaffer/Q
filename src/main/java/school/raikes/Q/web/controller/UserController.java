@@ -1,8 +1,10 @@
 package school.raikes.Q.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,17 +59,35 @@ public class UserController {
     }
 
     @RequestMapping(value = "/account/profile-picture", method = RequestMethod.GET)
-    public void getProfilePicture(Principal principal, HttpServletResponse response) {
+    public void getProfilePictureOfSelf(Principal principal, HttpServletResponse response) {
         try {
             User user = userService.findByUsername(principal.getName());
 
             response.setContentType(user.getImageType());
 
-            System.out.println(user.getImageType());
-
             response.getOutputStream().write(user.getImage());
         } catch (IOException ioe) {
             System.out.println(ioe);
+            //TODO: Handle this somehow.
+        }
+    }
+
+    @RequestMapping(value = "/account/profile-picture/{username}", method = RequestMethod.GET)
+    public void getProfilePictureOfUsername(@PathVariable String username, HttpServletResponse response) {
+
+        try {
+            User user = (User) userService.loadUserByUsername(username);
+
+            response.setContentType(user.getImageType());
+
+            response.getOutputStream().write(user.getImage());
+        } catch (UsernameNotFoundException unfe) {
+            try {
+                response.sendError(404, "User not found.");
+            } catch (IOException ioe) {
+
+            }
+        } catch (IOException ioe) {
             //TODO: Handle this somehow.
         }
     }

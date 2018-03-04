@@ -12,6 +12,8 @@ public interface QueueDao {
 
     Queue findByQueueItem(QueueItem queueItem);
 
+    Queue findByQueueCode(String queueCode);
+
     void save(Queue queue);
 
     void delete(Queue queue);

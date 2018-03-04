@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: htmlhead(${'Queue: ' + queue.getQueueCode()})">
+</head>
+<body>
+<nav th:replace="layout :: navbar('q')"></nav>
+<div th:replace="layout :: flashMessage(${flash})"></div>
+<div class="container">
+    <p class="display-4"></p>
+    <div class="col-lg">
+
+    </div>
+</div>
+</body>
